@@ -1,7 +1,7 @@
 {
   "title" : "UnityEditorScriptUtility",
   "author" : "forsmoo",
-  "license" : "MIT"
+  "license" : "MIT",
   "Mappings" : {
     "Default" : "Assets/Packages/UnityEditorScriptUtility/"
   }
