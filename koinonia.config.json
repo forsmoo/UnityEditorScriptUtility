@@ -3,6 +3,6 @@
   "author" : "forsmoo",
   "license" : "MIT",
   "Mappings" : {
-    "Default" : "Assets/Packages/UnityEditorScriptUtility/"
+    "Default" : "Assets/Plugins/UnityEditorScriptUtility"
   }
 }
