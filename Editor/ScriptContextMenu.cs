@@ -98,7 +98,7 @@ public class ScriptContextMenu : MonoBehaviour {
         }
         string folderPath = PathUtility.CreateEditorScriptPath(script);
         string filename = type.Name + "Editor.cs";
-        IScriptGenerator generator = new SimpleInspectorGenerator(type.Name);
+        IScriptGenerator generator = new SimpleInspectorGenerator(type.Name,type.Namespace);
         ScriptSaver.GenerateScript(folderPath,filename, generator);
     }
 

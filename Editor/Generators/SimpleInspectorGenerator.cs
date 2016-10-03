@@ -12,10 +12,13 @@ namespace ScriptGenerator
 
     public class SimpleInspectorGenerator : IScriptGenerator
     {
-        string className;
-        public SimpleInspectorGenerator(string className)
+        readonly string className;
+        readonly string classNamespace;
+
+        public SimpleInspectorGenerator(string className, string classNamespace)
         {
             this.className = className;
+            this.classNamespace = classNamespace;
         }
 
         public bool Generate(StreamWriter writer)
@@ -24,17 +27,28 @@ namespace ScriptGenerator
             writer.WriteLine("using UnityEngine;");
             writer.WriteLine("using UnityEditor;");
             writer.WriteLine();
-            writer.WriteLine("[CustomEditor(typeof("+className+"))]");
-            writer.WriteLine("public class " + className + "Editor : Editor");
-            writer.WriteLine("{");
 
-            writer.WriteLine("\tpublic override void OnInspectorGUI()");
-            writer.WriteLine("\t{");
-            writer.WriteLine("\t\tbase.OnInspectorGUI();");
-            writer.WriteLine("\t\tvar instance = target as " + className+";");
-            writer.WriteLine("\t}");
-            writer.WriteLine("}");
-            
+            string prefix = "";
+            if (!string.IsNullOrEmpty(classNamespace))
+            {
+                prefix = "\t";
+                writer.WriteLine("namespace " + classNamespace);
+                writer.WriteLine("{");
+            }
+
+            writer.WriteLine(prefix + "[CustomEditor(typeof(" + className + "))]");
+            writer.WriteLine(prefix + "public class " + className + "Editor : Editor");
+            writer.WriteLine(prefix + "{");
+
+            writer.WriteLine(prefix + "\tpublic override void OnInspectorGUI()");
+            writer.WriteLine(prefix + "\t{");
+            writer.WriteLine(prefix + "\t\tbase.OnInspectorGUI();");
+            writer.WriteLine(prefix + "\t\tvar instance = target as " + className + ";");
+            writer.WriteLine(prefix + "\t}");
+            writer.WriteLine(prefix + "}");
+
+            if (!string.IsNullOrEmpty(classNamespace))
+                writer.WriteLine("}");
             return true;
         }
     }
